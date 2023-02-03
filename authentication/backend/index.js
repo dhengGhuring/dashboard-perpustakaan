@@ -1,9 +1,25 @@
 import express from "express";
 import cors from "cors";
 import session from "express-session";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 //** Membuat middleware */
+
+app.use(
+  session({
+    secret: process.env.SESS_SECREAT,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      // secure cookienya dibuat 'auto' supaya secara otomatis terset ketika alamatnya menggunakan http atau https
+      secure: "auto",
+    },
+  })
+);
+
 app.use(
   cors({
     // cors credential berniali ture berfungsi agar frontend bisa mengirim request dan juga cookie beserta credentialnya
@@ -12,7 +28,8 @@ app.use(
     origin: "http://localhost:5173/",
   })
 );
-
+// middleware yang berfungsi agar backend bisa menerima data beruapa json dari fe
+app.use(express.json());
 //** Menghubungkan Port yang sudah di set di .env */
 app.listen(process.env.APP_PORT, () => {
   console.log("Server berjalan...");
