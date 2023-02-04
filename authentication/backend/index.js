@@ -30,6 +30,7 @@ app.use(
 );
 // middleware yang berfungsi agar backend bisa menerima data beruapa json dari fe
 app.use(express.json());
+
 //** Menghubungkan Port yang sudah di set di .env */
 app.listen(process.env.APP_PORT, () => {
   console.log("Server berjalan...");
