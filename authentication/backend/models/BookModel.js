@@ -1,13 +1,13 @@
-//** Model Rak buku atau list buku milih user */
+//** Model database buku */
 
-import { Sequelize } from "sequelize";
-import db from "../config/Database";
-import Users from "./UserModel";
+const { Sequelize } = require("sequelize");
+const db = require("../config/Database");
+const Users = require("./UserModel");
 
-const DataTypes = Sequelize;
+const { DataTypes } = Sequelize;
 
-const Bookshelfs = db.define(
-  "bookshelf",
+const Books = db.define(
+  "book",
   {
     uuid: {
       type: DataTypes.STRING,
@@ -57,11 +57,13 @@ const Bookshelfs = db.define(
       },
     },
   },
-  { freezeTableName: true }
+  {
+    freezeTableName: true,
+  }
 );
 
 //** Relasi bookshelf dengan user => one to many */
-Users.hasMany(Bookshelfs);
-Bookshelfs.belongsTo(Users, { foreignKey: "userId" });
+Users.hasMany(Books);
+Books.belongsTo(Users, { foreignKey: "userId" });
 
-export default Bookshelfs;
+module.exports = Books;

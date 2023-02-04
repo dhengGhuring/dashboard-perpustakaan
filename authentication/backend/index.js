@@ -1,12 +1,25 @@
-import express from "express";
-import cors from "cors";
-import session from "express-session";
-import dotenv from "dotenv";
-
+// import express from "express";
+// import cors from "cors";
+// import session from "express-session";
+// import dotenv from "dotenv";
+// const BookRoute = require("./routes/BookRoute");
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const dotenv = require("dotenv");
+const UserRoute = require("./routes/UserRoute");
+const BookRoute = require("./routes/BookRoute");
+// import BookRoute from "./routes/BookRoute";
+const db = require("./config/Database");
 dotenv.config();
 
 const app = express();
 //** Membuat middleware */
+
+//** Mengkoneksikan ke database */
+(async () => {
+  await db.sync();
+})();
 
 app.use(
   session({
@@ -30,7 +43,8 @@ app.use(
 );
 // middleware yang berfungsi agar backend bisa menerima data beruapa json dari fe
 app.use(express.json());
-
+app.use(UserRoute);
+app.use(BookRoute);
 //** Menghubungkan Port yang sudah di set di .env */
 app.listen(process.env.APP_PORT, () => {
   console.log("Server berjalan...");

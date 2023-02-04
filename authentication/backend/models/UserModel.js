@@ -1,7 +1,7 @@
 //** Model user */
 
-import { Sequelize } from "sequelize";
-import db from "../config/Database";
+const { Sequelize } = require("sequelize");
+const db = require("../config/Database");
 
 const { DataTypes } = Sequelize;
 
@@ -52,4 +52,4 @@ const Users = db.define(
   }
 );
 
-export default Users;
+module.exports = Users;
