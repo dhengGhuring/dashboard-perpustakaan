@@ -3,24 +3,24 @@
 // import session from "express-session";
 // import dotenv from "dotenv";
 // const BookRoute = require("./routes/BookRoute");
+// import BookRoute from "./routes/BookRoute";
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
 const dotenv = require("dotenv");
 const UserRoute = require("./routes/UserRoute");
 const BookRoute = require("./routes/BookRoute");
-// import BookRoute from "./routes/BookRoute";
 const db = require("./config/Database");
 dotenv.config();
 
 const app = express();
-//** Membuat middleware */
 
 //** Mengkoneksikan ke database */
 (async () => {
   await db.sync();
 })();
 
+//** Membuat middleware */
 app.use(
   session({
     secret: process.env.SESS_SECREAT,
@@ -38,7 +38,7 @@ app.use(
     // cors credential berniali ture berfungsi agar frontend bisa mengirim request dan juga cookie beserta credentialnya
     credentials: true,
     // origin wadah untuk mengizinkan domain apa saja yang bisa mengakses api yang sudah dibuat bisa berupa array jika ada banyak domain
-    origin: "http://localhost:5173/",
+    origin: "http://localhost:4000/",
   })
 );
 // middleware yang berfungsi agar backend bisa menerima data beruapa json dari fe
